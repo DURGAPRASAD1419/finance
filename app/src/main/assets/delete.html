@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        table {
+            border: 2px solid black;
+            border-radius: 5px;
+            background-color: skyblue;
+            margin-top: 50px;
+            width: 550px;
+        }
+        table, th, tr, td {
+            border: 1px solid black;
+            border-spacing: 0px;
+        }
+        td, th {
+            width: 100px;
+            height: 40px;
+        }
+        td {
+            color: white;
+        }
+        .delete-icon {
+            cursor: pointer;
+            color: red;
+        }
+    </style>
+    <title>Firebase Data Table</title>
+</head>
+<body>
+<div>
+    <center>
+        <table>
+            <thead>
+            <tr>
+                <th>Sno</th>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Joining Date</th>
+                <th>Paid Date</th>
+                <th>Delete</th>
+            </tr>
+            </thead>
+            <tbody id="tbody1"></tbody>
+        </table>
+    </center>
+</div>
+
+<script type="module">
+        var sno = 0;
+        var tbody = document.getElementById('tbody1');
+
+        function addItemToTable(serialNumber, name, joiningDate, paidDate, key) {
+            let trow = document.createElement("tr");
+            let td1 = document.createElement('td');
+            let td2 = document.createElement('td');
+            let td3 = document.createElement('td');
+            let td4 = document.createElement('td');
+            let td5 = document.createElement('td');
+            let td6 = document.createElement('td');
+            let deleteIcon = document.createElement('span');
+
+            td1.innerHTML = ++sno;
+            td2.innerHTML = serialNumber;
+            td3.innerHTML = name;
+            td4.innerHTML = joiningDate;
+            td5.innerHTML = paidDate;
+
+            deleteIcon.innerHTML = '<i class="fas fa-trash" style="color: #ff1b0a;"></i>';
+            deleteIcon.classList.add('delete-icon');
+            deleteIcon.onclick = function() {
+                deleteRow(key);
+            };
+
+            td6.appendChild(deleteIcon);
+
+            trow.appendChild(td1);
+            trow.appendChild(td2);
+            trow.appendChild(td3);
+            trow.appendChild(td4);
+            trow.appendChild(td5);
+            trow.appendChild(td6);
+
+            tbody.appendChild(trow);
+        }
+
+        function AddAllItemsToTable(TheCustomer) {
+            sno = 0;
+            tbody.innerHTML = "";
+            TheCustomer.forEach(element => {
+                addItemToTable(element.serial_number, element.name, element.date_of_joining, element.dat_of_paid, element.key);
+            });
+        }
+
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
+
+       const firebaseConfig = {
+  apiKey: "AIzaSyBOxr7wELZDaRy2MaD6Ve9bJoHr9i4s4yQ",
+  authDomain: "submitdata-6321f.firebaseapp.com",
+  databaseURL: "https://submitdata-6321f-default-rtdb.firebaseio.com",
+  projectId: "submitdata-6321f",
+  storageBucket: "submitdata-6321f.appspot.com",
+  messagingSenderId: "650316730792",
+  appId: "1:650316730792:web:980e6ae78021b5ff850d9d"
+};
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        import { getDatabase, ref, child, onValue, get, remove } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-database.js";
+        const db = getDatabase();
+
+        function GetAllDataRealtime() {
+            const dbRef = ref(db, "users");
+            onValue(dbRef, (snapshot) => {
+                var users = [];
+                snapshot.forEach(childSnapshot => {
+                    let userData = childSnapshot.val();
+                    userData.key = childSnapshot.key; // Add key to userData for delete function
+                    users.push(userData);
+                });
+                AddAllItemsToTable(users);
+            }, (error) => {
+                console.error("Error fetching data:", error);
+            });
+        }
+
+        function deleteRow(key) {
+            const dbRef = ref(db, "users/" + key);
+            remove(dbRef)
+                .then(() => {
+                    console.log("Row deleted successfully!");
+                    GetAllDataRealtime(); // Refresh the table
+                })
+                .catch((error) => {
+                    console.error("Error deleting row:", error);
+                });
+        }
+
+        window.onload = GetAllDataRealtime;
+    </script>
+</body>
+</html>

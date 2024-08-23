@@ -1,0 +1,115 @@
+<html>
+    <head>
+        <style>
+            input{
+                width:320px;
+                height:50px;
+                border-radius:10px;
+            }
+            table{
+                border:2px solid black;
+                height:530px;
+                width:300px;
+                border-radius:10px;
+                background-color: blue;
+                box-shadow: 10px 20px 20px;
+                margin-top:50px;
+            }
+            button{
+                margin-left: 100px;
+                height:30px;
+                width:80px;
+                background-color: aqua;
+                color: rgb(241, 10, 10);
+                font-size: 17px;
+                border-radius: 10px;
+
+            }
+        </style>
+
+    </head>
+    <body>
+       <center><table>
+            <tr>
+          <td><input type="number" placeholder="Enter serial number" id="input1" name="serialnumber" required/></td>
+        </tr>
+        <tr></tr>
+        <tr></tr>
+        <tr></tr>
+        <tr>
+            <td><input type="text" placeholder="Enter the name" id="input2" name="name"required/></td>
+          </tr>
+          <tr></tr>
+          <tr></tr>
+          <tr></tr>
+          <tr>
+            <td><input type="text" placeholder="Enter village" id="input3" name="password" required/></td>
+          </tr>
+          <tr></tr>
+          <tr></tr>
+          <tr></tr>
+          <tr>
+            <td><input type="text" placeholder="Date of joining" id="input4" width="50px" name="datejoined" onfocus="(this.type='date')" required/></td>
+          </tr>
+          <tr></tr>
+          <tr></tr>
+          <tr></tr>
+          <tr>
+            <td><input type="text" placeholder="Date of paid" id="input5" name="datepaid" onfocus="(this.type='date')" required/></td><br>
+          </tr>
+          <tr></tr>
+          <tr></tr>
+          <tr></tr>
+          <tr>
+
+            <td><button id="submit" type="submit" >submit</button></td>
+          </tr>
+        </table></center>
+    </body>
+</html>
+<script type="module">
+    // Import the functions you need from the SDKs you need
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-app.js";
+    import {
+        getDatabase,
+        ref,
+        set,
+        push,
+        child,
+     } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-database.js";
+    // TODO: Add SDKs for Firebase products that you want to use
+    // https://firebase.google.com/docs/web/setup#available-libraries
+
+    // Your web app's Firebase configuration
+    const firebaseConfig = {
+  apiKey: "AIzaSyBOxr7wELZDaRy2MaD6Ve9bJoHr9i4s4yQ",
+  authDomain: "submitdata-6321f.firebaseapp.com",
+  databaseURL: "https://submitdata-6321f-default-rtdb.firebaseio.com",
+  projectId: "submitdata-6321f",
+  storageBucket: "submitdata-6321f.appspot.com",
+  messagingSenderId: "650316730792",
+  appId: "1:650316730792:web:980e6ae78021b5ff850d9d"
+};
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+
+    const database = getDatabase(app);
+    submit.addEventListener('click',(e) => {
+        const userId = push(child(ref(database), 'Users')).key;
+        set(ref(database, 'users/' + userId), {
+        serial_number: document.getElementById('input1').value,
+        name: document.getElementById('input2').value,
+        village : document.getElementById('input3').value,
+        date_of_joining : document.getElementById('input4').value,
+        dat_of_paid : document.getElementById('input5').value,
+     })
+    .then(() => {
+        alert("data submitted!");
+    })
+    .catch((error) => {
+        alert(error);
+     });
+
+ });
+  </script>

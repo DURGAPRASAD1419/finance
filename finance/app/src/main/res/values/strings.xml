@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">finance</string>
+    <string name="username">Username</string>
+    <string name="password">Password</string>
+    <string name="reenter">Re-enter password</string>
+    <string name="email">Email</string>
+    <string name="phone">Phone number</string>
+</resources>

@@ -1,0 +1,93 @@
+<!-- Your XML with suggested changes -->
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".signup"
+    android:background="@drawable/bg">
+
+    <!-- TextInputLayout for Email -->
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/registrationLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/email"
+        android:layout_marginTop="300dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/email"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textWebEmailAddress"
+            android:drawableRight="@drawable/baseline_email_24" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <!-- TextInputLayout for Password -->
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/profileLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/password"
+        android:layout_marginTop="400dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        app:passwordToggleEnabled="true">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textWebPassword" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <!-- Sign up Button -->
+    <Button
+        android:id="@+id/signup"
+        android:layout_width="120dp"
+        android:layout_height="60dp"
+        android:text="Sign up"
+        android:textSize="18sp"
+        android:layout_marginTop="520dp"
+
+        android:layout_marginLeft="140dp" />
+
+    <!-- Already have an account TextView -->
+    <TextView
+        android:id="@+id/text1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Already have an account? Log in"
+        android:textSize="16sp"
+        android:textColor="#4d1a00"
+        android:layout_marginTop="620dp"
+        android:layout_marginLeft="70dp" />
+    <TextView
+        android:id="@+id/toggleText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Switch to Registration View" />
+
+    <!-- User Icon ImageView -->
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:src="@drawable/user"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="100dp" />
+
+    <!-- Progress Bar -->
+    <ProgressBar
+        android:id="@+id/progress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:layout_marginTop="680dp"
+        android:layout_marginLeft="190dp" />
+
+</RelativeLayout>
